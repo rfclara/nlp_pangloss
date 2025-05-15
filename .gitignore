@@ -1,3 +1,6 @@
 .pixi/
-PANGLOSS-0004440/
-*.png
+data
+Na_best_model
+__pycache__/
+output
+

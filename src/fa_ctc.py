@@ -15,7 +15,7 @@ model.eval()
 
 import torchaudio
 
-audio_path = '/mnt2/wisniewski/clara/fa_na/PANGLOSS-0004440/PANGLOSS-0004440_1.wav'
+audio_path = 'data/235213.wav'
 waveform, sample_rate = torchaudio.load(audio_path)
 
 # Resample if necessary (if your model expects a different sample rate)
@@ -34,4 +34,4 @@ with torch.no_grad():
     print(f"{logits=}")
 # working ^^^^
 
-gold_transcription = "ɬi˧di˩-dʑo˩, | ʈʂʰɯ˧ne˧-ʝi˥ | lo˧-ʝi˧-kv̩˩ mæ˩, ◊ ə˩-gi˩! |"
+gold_transcription = "ə˧ʝi˧-ʂɯ˥ʝi˩ ◊ -dʑo˩ … ◊ ə˩-gi˩!"
