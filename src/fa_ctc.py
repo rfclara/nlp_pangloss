@@ -5,7 +5,7 @@ import torchaudio
 torch.set_num_threads(1)
 
  # solving warningOpenBLAS Warning : Detect OpenMP Loop and this application may hang. Please rebuild the library with USE_OPENMP=1 option
-model_path = '/mnt2/wisniewski/clara/2023/models/Na_best_model'
+model_path = 'Na_best_model'
 model = Wav2Vec2ForCTC.from_pretrained(model_path).to('cuda' if torch.cuda.is_available() else 'cpu')
 processor = Wav2Vec2Processor.from_pretrained(model_path)
 print(f"{model.device=}")

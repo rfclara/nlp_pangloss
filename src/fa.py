@@ -17,18 +17,14 @@ print(f"torch.__version__={torch.__version__}")
 print(f"torchaudio.__version__={torchaudio.__version__}")
 
 # Load model and processor
-model_path = Path('/mnt2/wisniewski/clara/2023/models/Na_best_model')
+model_path = Path('Na_best_model')
 model = Wav2Vec2ForCTC.from_pretrained(str(model_path)).to('cuda' if torch.cuda.is_available() else 'cpu')
 processor = Wav2Vec2Processor.from_pretrained(str(model_path))
 print(f"Using {model.device}")
 
 # AUDIO AND GOLD TRANSCRIPTION
-audio_path = Path('/mnt2/wisniewski/clara/fa_na/PANGLOSS-0004440/PANGLOSS-0004440_5.wav')
-gold_transcription = "ɖɯ˧ɬi˧mi˧ <kʰɤ˧ʂɯ˧-hĩ˧> [-ʁo˧ʑi˧˥], | ʈʂʰɯ˧-dʑo˩ | tʰi˩˥, | əəə… zo˩no˥, | ə˧ɲi˧-tsʰi˧ɲi˧ | bæ˩˥ | le˧-ʂo˥, | gv̩˩ɬi˩mi˩˥ | bæ˩ ʂo˧-ɲi˥-ze˩ mæ˩, ◊ ə˩-gi˩! |"
-
-audio_path = Path("/mnt2/wisniewski/clara/fa_na/PANGLOSS-0004440/PANGLOSS-0004440_69.wav")
-gold_transcription = "hĩ˧-di˧-qo˥ | mɤ˧-hwæ˧-ɲi˥ mæ˩! |"
-
+audio_path = Path('output/235213/235213_s1.wav')
+gold_transcription = "ə˧ʝi˧-ʂɯ˥ʝi˩ ◊ -dʑo˩ … ◊ ə˩-gi˩!"
 
 waveform, original_sample_rate = torchaudio.load(str(audio_path))
 used_sample_rate = original_sample_rate  # Default to original sample rate
@@ -146,7 +142,7 @@ def plot_scores(word_spans, scores, sentence):
     ax.grid(True, axis="y")
     ax.axhline(0, color="black")
     fig.tight_layout()
-    fig.savefig("/mnt2/wisniewski/clara/fa_na/fig.png", dpi=300)
+    fig.savefig("fig.png", dpi=300)
 
 
 plot_scores(word_spans, alignment_scores,normalized_gold)
