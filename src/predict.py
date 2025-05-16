@@ -73,9 +73,6 @@ def main():
     model_path = 'Na_best_model'
     model, processor = load_model_and_processor(model_path, device)
 
-    # Print model's max position embeddings
-    print(model.config.max_position_embeddings)
-
     # Load and resample audio
     waveform = load_and_resample_audio(args.input_file)
 
