@@ -46,10 +46,9 @@ def transcribe_audio(model, processor, waveform, device):
 
 
 def main():
-    # Set up argument parser
+    # Set up argument Parser
     parser = argparse.ArgumentParser(description="Transcribe audio using Wav2Vec2.")
     parser.add_argument("input_file", type=str, help="Path to the input .wav file")
-    parser.add_argument("output_file", type=str, help="Path to the output .txt file")
     args = parser.parse_args()
 
     # Validate input file
@@ -57,10 +56,8 @@ def main():
     if not input_path.is_file() or input_path.suffix != '.wav':
         raise ValueError("Input file must be a valid .wav file.")
 
-    # Validate output file
-    output_path = Path(args.output_file)
-    if output_path.suffix != '.txt':
-        raise ValueError("Output file must have a .txt extension.")
+    # Generate output file path by changing the extension to .txt
+    output_path = input_path.with_suffix('.txt')
 
     # Clear memory
     clear_memory()
@@ -80,10 +77,10 @@ def main():
     transcription = transcribe_audio(model, processor, waveform, device)
 
     # Save the transcription to the output file
-    with open(args.output_file, 'w') as f:
+    with open(output_path, 'w') as f:
         f.write(transcription)
 
-    print(f"Transcription saved to {args.output_file}")
+    print(f"Transcription saved to {output_path}")
 
 
 if __name__ == "__main__":
