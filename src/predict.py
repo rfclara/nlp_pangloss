@@ -1,10 +1,15 @@
+"""
+Transcribe audio files using a pretrained Wav2Vec2 model.
+Save the transcription to a text file.
+Usage :
+    python predict.py <input_file> --model <model_path>
+"""
 import torch
 import torchaudio
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 import argparse
 import gc
 from pathlib import Path
-
 
 def clear_memory():
     """Clear GPU memory (useful for large models)."""
