@@ -19,11 +19,11 @@ def load_model_and_processor(model_path, device):
     return model, processor
 
 
-def load_and_resample_audio(audio_path, target_sample_rate=16000):
+def load_and_resample_audio(audio_path, sample_rate=16000):
     """Load and resample the audio file."""
-    waveform, sample_rate = torchaudio.load(audio_path)
-    if sample_rate != target_sample_rate:
-        resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=target_sample_rate)
+    waveform, orig_freq = torchaudio.load(audio_path)
+    if orig_freq != sample_rate:
+        resampler = torchaudio.transforms.Resample(orig_freq=orig_freq, new_freq=sample_rate)
         waveform = resampler(waveform)
     return waveform
 
@@ -36,19 +36,19 @@ def transcribe_audio(model, processor, waveform, device):
     # Forward pass in the model to get logits
     with torch.no_grad():
         logits = model(input_values).logits
-        print(f"Logits shape: {logits.shape}")
+        #print(f"Logits shape: {logits.shape}")
 
     # Decode the predicted transcription
     predicted_ids = torch.argmax(logits, dim=-1)
     transcription = processor.batch_decode(predicted_ids)[0]
-    print(f"Transcription: {transcription}")
+    #print(f"Transcription: {transcription}")
     return transcription
-
-
+    
 def main():
     # Set up argument Parser
     parser = argparse.ArgumentParser(description="Transcribe audio using Wav2Vec2.")
     parser.add_argument("input_file", type=str, help="Path to the input .wav file")
+    parser.add_argument("--model", type=str, default="Na_best_model", help="Path or name of the pretrained model")
     args = parser.parse_args()
 
     # Validate input file
@@ -64,10 +64,10 @@ def main():
 
     # Check for GPU availability
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    print(f"Using device: {device}")
+    #print(f"Using device: {device}")
 
     # Load model and processor
-    model_path = 'Na_best_model'
+    model_path = args.model
     model, processor = load_model_and_processor(model_path, device)
 
     # Load and resample audio
