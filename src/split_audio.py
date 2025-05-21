@@ -13,7 +13,7 @@ def load_audio(audio_path, target_sample_rate=16000):
     return waveform, sample_rate
 
 
-def split_audio_with_sad(audio_path, output_dir, max_chunk_length=20):
+def split_audio_with_sad(audio_path, output_dir, max_len=20):
     """Split audio into chunks using SAD and a maximum chunk length."""
     # Initialize PyAnnote-Audio's SAD pipeline
     pipeline = Pipeline.from_pretrained("pyannote/voice-activity-detection", use_auth_token="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")
@@ -35,8 +35,8 @@ def split_audio_with_sad(audio_path, output_dir, max_chunk_length=20):
     for start, end in speech_segments:
         segment_duration = end - start
 
-        # If adding this segment exceeds max_chunk_length, save the current chunk
-        if current_duration + segment_duration > max_chunk_length:
+        # If adding this segment exceeds max_len, save the current chunk
+        if current_duration + segment_duration > max_len:
             # Save the current chunk
             chunks.append(current_chunk)
             current_chunk = []
@@ -74,7 +74,7 @@ def main():
     parser = argparse.ArgumentParser(description="Split audio using SAD and a maximum chunk length.")
     parser.add_argument("input_file", type=str, help="Path to the input .wav file")
     parser.add_argument("output_dir", type=str, help="Directory to save the audio chunks")
-    parser.add_argument("--max_chunk_length", type=int, default=20, help="Maximum chunk length in seconds")
+    parser.add_argument("--max_len", type=int, default=40, help="Maximum chunk length in seconds")
     args = parser.parse_args()
 
     # Validate input file
@@ -83,7 +83,7 @@ def main():
         raise ValueError("Input file must be a valid .wav file.")
 
     # Split the audio
-    split_audio_with_sad(args.input_file, args.output_dir, max_chunk_length=args.max_chunk_length)
+    split_audio_with_sad(args.input_file, args.output_dir, max_len=args.max_len)
 
 
 if __name__ == "__main__":
