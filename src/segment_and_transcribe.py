@@ -16,12 +16,11 @@ def fill_interval(interval, waveform, sample_rate, model, processor, device):
     start_sample = int(float(interval.minTime) * sample_rate)
     end_sample = int(float(interval.maxTime) * sample_rate)
     segment_waveform = waveform[:, start_sample:end_sample]
-    if segment_waveform.shape[1] >= MIN_SAMPLES:
+    if segment_waveform.shape[0] > 1:
+        # Convert to mono if stereo
+        segment_waveform = segment_waveform.mean(dim=0, keepdim=True) # TODO this code does not belong here
+    if (segment_waveform.shape[1] >= MIN_SAMPLES) and (interval.mark != ""):
         interval.mark = transcribe_audio(model, processor, segment_waveform, device)
-    else: #delete the interval if too short
-        interval.mark = ""
-        interval.minTime = 0
-        interval.maxTime = 0
     return interval.mark
 
 def process_textgrid(textgrid_file, waveform, sample_rate, model, processor, device):
