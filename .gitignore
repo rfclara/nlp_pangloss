@@ -1,11 +1,7 @@
 .pixi/
-data
 Na_best_model
 __pycache__/
-output
 *png
 segmented
-
-# pixi environments
 .pixi
 *.egg-info
