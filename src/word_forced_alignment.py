@@ -2,14 +2,11 @@
 Align words in a sentence with their corresponding audio segments using forced alignment.
 Extract and save the audio segments corresponding to each word.
 
-TODO : 
 get transcriptions from parse_transcriptions_xml.py
 write back to the pangloss xml file
 
-ALTERATIVE:
-Use pangloss xml file to get the transcription and forced align the audio, adding the timestamps to the xml file directly
-+ include a fonction to extract the audio segments corresponding to the words, making sure not to overwrite when the word is already present
-and parse_transcriptions_xml.py will be deprecated
+TODO : make fonction to extract the audio segments corresponding to the words, making sure not to overwrite when the word is already present
+
 """
 
 import argparse
