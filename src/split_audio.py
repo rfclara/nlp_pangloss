@@ -13,10 +13,13 @@ def load_audio(audio_path, target_sample_rate=16000):
     return waveform, sample_rate
 
 
-def split_audio_with_sad(audio_path, output_dir, max_len=20):
+def split_audio_with_sad(audio_path, output_dir, max_len=20, use_auth_token=None):
     """Split audio into chunks using SAD and a maximum chunk length."""
     # Initialize PyAnnote-Audio's SAD pipeline
-    pipeline = Pipeline.from_pretrained("pyannote/voice-activity-detection", use_auth_token="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")
+    pipeline = Pipeline.from_pretrained(
+        "pyannote/voice-activity-detection",
+        use_auth_token=use_auth_token
+    )
 
     # Apply SAD to detect speech regions
     output = pipeline(audio_path)
@@ -69,12 +72,14 @@ def split_audio_with_sad(audio_path, output_dir, max_len=20):
 
 def main():
     import argparse
+    import os
 
     # Set up argument Parser
     parser = argparse.ArgumentParser(description="Split audio using SAD and a maximum chunk length.")
     parser.add_argument("input_file", type=str, help="Path to the input .wav file")
     parser.add_argument("output_dir", type=str, help="Directory to save the audio chunks")
     parser.add_argument("--max_len", type=int, default=40, help="Maximum chunk length in seconds")
+    parser.add_argument("--use_auth_token", type=str, default=None, help="Hugging Face authentication token (or set HF_TOKEN env variable)")
     args = parser.parse_args()
 
     # Validate input file
@@ -82,8 +87,13 @@ def main():
     if not input_path.is_file() or input_path.suffix != '.wav':
         raise ValueError("Input file must be a valid .wav file.")
 
+    # Get token from argument or environment
+    use_auth_token = args.use_auth_token or os.environ.get("HF_TOKEN")
+    if not use_auth_token:
+        raise RuntimeError("Please provide --use_auth_token or set HF_TOKEN environment variable.")
+
     # Split the audio
-    split_audio_with_sad(args.input_file, args.output_dir, max_len=args.max_len)
+    split_audio_with_sad(args.input_file, args.output_dir, max_len=args.max_len, use_auth_token=use_auth_token)
 
 
 if __name__ == "__main__":
