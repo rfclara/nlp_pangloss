@@ -5,7 +5,9 @@ Extract and save the audio segments corresponding to each word.
 get transcriptions from parse_transcriptions_xml.py
 write back to the pangloss xml file
 
-TODO : make fonction to extract the audio segments corresponding to the words, making sure not to overwrite when the word is already present
+TODO : 
+- make fonction to extract the audio segments corresponding to the words (like in tests/test_fa), making sure not to overwrite when the word is already present
+
 
 """
 
@@ -73,8 +75,7 @@ def process_sentence(sentence_elem, wav_path, model, processor, device, sample_r
     # Get phono transcription
     phono_form = sentence_elem.find("./FORM[@kindOf='phono']")
     if phono_form is None or not phono_form.text:
-        return
-    transcription = phono_form.text.strip()
+        return 
 
     # Get word forms
     word_elems = sentence_elem.findall('W')
@@ -94,7 +95,7 @@ def process_sentence(sentence_elem, wav_path, model, processor, device, sample_r
 
     # Forced alignment
     logits = get_logits(model, processor, sentence_waveform, sample_rate, device)
-    #normalized_gold = normalize_transcription(transcription) # Deux methodes differentes de l'extraction de mots
+    #normalized_gold = normalize_transcription(transcription) # Two different ways to get the transcription, but this depends on NA language preprocessing
     normalized_gold = extract_sentence_words(sentence_elem)
     tokens = get_token_ids(processor, normalized_gold)
     aligned_tokens, alignment_scores = align(logits, tokens, device)
