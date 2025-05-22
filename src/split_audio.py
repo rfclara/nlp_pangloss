@@ -2,6 +2,10 @@ import torch
 import torchaudio
 from pyannote.audio import Pipeline
 from pathlib import Path
+"""Splits audio into chunks using PyAnnote's SAD and a maximum chunk length.
+TODO : test max_len and doc
+exemple
+"""
 
 
 def load_audio(audio_path, target_sample_rate=16000):
@@ -77,7 +81,7 @@ def main():
     # Set up argument Parser
     parser = argparse.ArgumentParser(description="Split audio using SAD and a maximum chunk length.")
     parser.add_argument("input_file", type=str, help="Path to the input .wav file")
-    parser.add_argument("output_dir", type=str, help="Directory to save the audio chunks")
+    parser.add_argument("output_dir", type=str, default="./segmented", help="Directory to save the audio chunks")
     parser.add_argument("--max_len", type=int, default=40, help="Maximum chunk length in seconds")
     parser.add_argument("--use_auth_token", type=str, default=None, help="Hugging Face authentication token (or set HF_TOKEN env variable)")
     args = parser.parse_args()
