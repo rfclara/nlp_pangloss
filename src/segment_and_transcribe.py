@@ -5,6 +5,7 @@ from pathlib import Path
 import textgrid
 from diarization.diarization import diarize_audio
 from predict import load_model_and_processor, load_and_resample_audio, transcribe_audio, clear_memory
+import torchaudio.functional as F
 """
 This script transcribes segments of an audio file using pyannote diarization and a Wav2Vec2 model.
 Output is saved in a TextGrid format.
@@ -12,15 +13,20 @@ Output is saved in a TextGrid format.
 
 MIN_SAMPLES = 10000  # Define as a constant
 
+def ensure_mono(waveform):
+    """Convert waveform to mono if it is stereo."""
+    if waveform.shape[0] > 1:
+        return F.downmix_to_mono(waveform)
+    return waveform
+
 def fill_interval(interval, waveform, sample_rate, model, processor, device):
     start_sample = int(float(interval.minTime) * sample_rate)
     end_sample = int(float(interval.maxTime) * sample_rate)
     segment_waveform = waveform[:, start_sample:end_sample]
-    if segment_waveform.shape[0] > 1:
-        # Convert to mono if stereo
-        segment_waveform = segment_waveform.mean(dim=0, keepdim=True) # TODO this code does not belong here
     if (segment_waveform.shape[1] >= MIN_SAMPLES) and (interval.mark != ""):
         interval.mark = transcribe_audio(model, processor, segment_waveform, device)
+    else:
+        interval.mark = ""
     return interval.mark
 
 def process_textgrid(textgrid_file, waveform, sample_rate, model, processor, device):
@@ -36,7 +42,7 @@ def main():
     parser.add_argument("--model", type=str, required=True, help="Path to the Wav2Vec2 model")
     parser.add_argument("--audio_path", type=str, required=True, help="Path to the audio file")
     parser.add_argument("--num_speakers", type=int, default=None, help="Number of speakers (optional)")
-    parser.add_argument('--use_auth_token', type=str, default=None, help='Hugging Face authentication token (or set HF_TOKEN env variable)')
+    parser.add_argument('--use_auth_token', type=str, default=None, help='Hugging Face authentication token (or set HF_TOKEN env variable: export HF_TOKEN=...)')
 
     args = parser.parse_args()
 
@@ -59,6 +65,8 @@ def main():
 
     # Load and resample audio
     waveform = load_and_resample_audio(audio_file, sample_rate=SAMPLE_RATE)
+    # Ensure mono
+    waveform = torch.mean(waveform, dim=0).unsqueeze(0)
 
     # Transcribe each segment in the TextGrid
     tg = process_textgrid(textgrid_file, waveform, SAMPLE_RATE, model, processor, device)
