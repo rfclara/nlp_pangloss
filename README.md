@@ -35,7 +35,7 @@ This repository provides tools for forced alignment, segmentation, and transcrip
 ## Usage
 
 All main features are available as CLI commands thanks to the package structure and [project.scripts] entry points.  
-**You do not need to specify `src/` or use `python ...` directly.**  
+**You do not need to use `python ...` directly.**  
 Use the following commands from your project root (or with `pixi run ...`):
 
 ### Transcribe and segment long audio files and get TextGrid
