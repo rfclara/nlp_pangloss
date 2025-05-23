@@ -4,7 +4,7 @@ import torch
 from pathlib import Path
 import textgrid
 from diarization.diarization import diarize_audio
-from predict import load_model_and_processor, load_and_resample_audio, transcribe_audio, clear_memory
+from nlp_pangloss.predict import load_model_and_processor, load_and_resample_audio, transcribe_audio, clear_memory
 import torchaudio.functional as F
 """
 This script transcribes segments of an audio file using pyannote diarization and a Wav2Vec2 model.

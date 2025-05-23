@@ -19,8 +19,8 @@ from pathlib import Path
 import gc
 import xml.etree.ElementTree as ET
 import torchaudio.functional as F
-from preprocessing_text_na import final_text_words
-from parse_transcriptions_xml import extract_sentence_words
+from nlp_pangloss.preprocessing_text_na import final_text_words
+from nlp_pangloss.parse_transcriptions_xml import extract_sentence_words
 
 FRAME_SHIFT_SEC = 0.02  # 20 ms per frame
 
