@@ -43,14 +43,14 @@ Use the following commands from your project root (or with `pixi run ...`):
 Uses diarization and ASR to create a TextGrid file handling multiple speaker tiers and distinguishing between human voice and silence/noise.
 
 ```sh
-pixi run transcribe --model Na_best_model --audio_path data/235213.wav --num_speakers 1
+pixi run transcribe --model models/Na_best_model --audio_path data/235213.wav --num_speakers 1
 ```
 - Outputs a transcribed TextGrid file.
 
 ### Forced Alignment and Word-Level Timestamps
 
 ```sh
-pixi run word_align --pangloss_xml data/235213.xml --wav data/235213.wav --model Na_best_model
+pixi run word_align --pangloss_xml data/235213.xml --wav data/235213.wav --model models/Na_best_model
 ```
 - Outputs an aligned Pangloss XML file with word-level `<AUDIO start="..." end="..."/>` tags.
 
@@ -59,7 +59,7 @@ pixi run word_align --pangloss_xml data/235213.xml --wav data/235213.wav --model
 Simplistic transcription of short audio files using a pretrained Wav2Vec2 model.
 
 ```sh
-pixi run simple_predict data/235213.wav --model Na_best_model
+pixi run simple_predict data/235213.wav --model models/Na_best_model
 ```
 - Outputs `data/235213.txt` containing the transcription.
 - Does not handle multiple speakers.
