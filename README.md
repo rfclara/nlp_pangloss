@@ -11,7 +11,7 @@ This repository provides tools for forced alignment, segmentation, and transcrip
 
 ## Installation
 
-1. **Clone the repository** and install dependencies using [pixi](https://prefix.dev/docs/pixi/):
+1. **Clone the repository** and install dependencies using [pixi](https://pixi.sh/latest/):
 
    ```sh
    pixi install
