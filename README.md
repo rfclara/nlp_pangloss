@@ -11,26 +11,46 @@ This repository provides tools for forced alignment, segmentation, and transcrip
 
 ## Installation
 
-1. **Clone the repository** and install dependencies using [pixi](https://pixi.sh/latest/):
+### Linux / macOS
 
-   ```sh
-   pixi install
-   ```
+To set up the environment and install the package, follow these steps:
 
-2. Accept [pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0), [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1), and [pyannote/voice-activity-detection](https://huggingface.co/pyannote/voice-activity-detection) on Hugging Face.
+```sh
+chmod +x setup.sh
+./setup.sh
+```
 
-3. Create an access token at [`hf.co/settings/tokens`](https://hf.co/settings/tokens).
+### Other Platforms :
 
-4. Set your Hugging Face token in the environment variable:
+1. Accept [pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0), [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1), and [pyannote/voice-activity-detection](https://huggingface.co/pyannote/voice-activity-detection) on Hugging Face.
+
+2. Create an access token at [`hf.co/settings/tokens`](https://hf.co/settings/tokens).
+
+3. Set your Hugging Face token in the environment variable:
 
    ```sh
    export HF_TOKEN=your_token_here
    ```
    or use the `--token` argument in the CLI commands.
 
-5. **Download or prepare WAV files (and Pangloss XML files)** and place them in the `data/` directory.
+4. Install dependencies in a virtual environnement using [pixi](https://pixi.sh/latest/):
 
-6. **Download or train a Wav2Vec2 model** and use it in the `--model` argument.
+   ```sh
+   pixi install
+   ```
+
+5. **Install the package**
+This allows you to use the package as a CLI tool and import it in Python scripts.
+
+```sh
+pixi run python -m pip install --upgrade pip
+pixi run python -m ensurepip --upgrade
+pixi run pip install -e .
+```
+
+6. **Download or prepare WAV files (and Pangloss XML files)** and place them in the `data/` directory (recommended).
+
+7. **Download or train a Wav2Vec2 model** and use it in the `--model` argument, place ir in `models/` directory (recommended).
 
 ## Usage
 
