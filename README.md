@@ -43,8 +43,8 @@ chmod +x setup.sh
 This allows you to use the package as a CLI tool and import it in Python scripts.
 
 ```sh
-pixi run python -m pip install --upgrade pip
 pixi run python -m ensurepip --upgrade
+pixi run python -m pip install --upgrade pip
 pixi run pip install -e .
 ```
 

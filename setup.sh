@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -e
+export TMPDIR="$HOME/tmp"
+mkdir -p "$TMPDIR"
 
 echo "=== Setting up the nlp_pangloss project ==="
 
@@ -11,6 +13,8 @@ pixi install
 
 # 2. Install the package in editable mode (so CLI commands work)
 echo "-> Installing the package (editable mode)..."
+pixi run python -m ensurepip --upgrade
+pixi run python -m pip install --upgrade pip
 pixi run pip install -e .
 
 # 3. Prompt for Hugging Face token
