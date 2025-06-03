@@ -1,11 +1,11 @@
+import torchaudio
+import torch
 import argparse
 import gc
 import os
 from pyannote.audio import Pipeline
 from pathlib import Path
-import torch
 import textgrid
-import torchaudio
 
 """From the audio file, returns the diarization result in RTTM and TextGrid format
 contains the speaker id, start time, end time"""
