@@ -3,7 +3,7 @@ authors = [{name = "rfclara", email = "c.rosinafernandez@gmail.com"}]
 name = "nlp_pangloss"
 requires-python = ">=3.9"
 version = "0.1.0"
-dependencies = ["pyannote-audio @ git+https://github.com/pyannote/pyannote-audio.git", "diarization @ git+https://github.com/rfclara/diarization.git"]
+dependencies = ["pyannote-audio @ git+https://github.com/pyannote/pyannote-audio.git"]
 
 [build-system]
 build-backend = "hatchling.build"
