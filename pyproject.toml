@@ -41,7 +41,6 @@ pytorch-cuda = "12.1.*"
 pytorch = "2.2.*"
 torchvision = "0.17.*"
 torchaudio = "2.*"
-nomkl = "*"
 
 [target.win-64.dependencies]
 pytorch = "2.2.*"
