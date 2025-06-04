@@ -20,7 +20,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### Other Platforms :
+### Windows :
 
 1. Accept [pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0), [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1), and [pyannote/voice-activity-detection](https://huggingface.co/pyannote/voice-activity-detection) on Hugging Face.
 
@@ -28,21 +28,21 @@ chmod +x setup.sh
 
 3. Set your Hugging Face token in the environment variable:
 
-   ```sh
-   export HF_TOKEN=your_token_here
+   ```powershell
+   $env:HF_TOKEN="your_token_here"
    ```
    or use the `--token` argument in the CLI commands.
 
-4. Install dependencies in a virtual environnement using [pixi](https://pixi.sh/latest/):
+4. Install dependencies in a virtual environment using [pixi](https://pixi.sh/latest/):
 
-   ```sh
+   ```powershell
    pixi install
    ```
 
-5. **Install the package**
+5. **Install the package**  
 This allows you to use the package as a CLI tool and import it in Python scripts.
 
-```sh
+```powershell
 pixi run python -m ensurepip --upgrade
 pixi run python -m pip install --upgrade pip
 pixi run pip install -e .

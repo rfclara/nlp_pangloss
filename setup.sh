@@ -23,6 +23,7 @@ if [ -z "$HF_TOKEN" ]; then
   echo "   You can get a token at https://hf.co/settings/tokens"
   echo "   Then run command : export HF_TOKEN=your_token_here"
   echo "-> Skipping token export. You must do this manually if not already set."
+  echo "-> Alternatively, you can pass the token directly to the CLI commands using --hf_token."
 else
   echo "-> HF_TOKEN is set."
 fi
